@@ -13,15 +13,12 @@ namespace librarysystem
 {
     public partial class Form8 : Form
     {
-        private int copyId;
-        public int BorrowerId { get; private set; }
-        public Form8(int copyId, string title, string borrowerName, string dateBorrowed, string dateReturn)
+        private string bookId;
+        public Form8(string bookId, string title, string author, int borrowerId, string dateBorrowed, string dateReturn)
         {
             InitializeComponent();
-            this.copyId = copyId;
-            txtCopyId.Text = copyId.ToString();
+            this.bookId = bookId;
             txtTitle.Text = title;
-            txtName.Text = borrowerName;
             txtBorrowedDate.Text = dateBorrowed;
             txtDueDate.Text = dateReturn;
         }
@@ -31,23 +28,34 @@ namespace librarysystem
             using (MySqlConnection conn = new MySqlConnection(connector.connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand($"UPDATE tbl_book_copies SET status='AVAILABLE', " +
-                    $"borrower_id=NULL, date_borrow=NULL, date_return=NULL " +
-                    $"WHERE copy_id=@copyId", conn);
 
+                // ✅ Update the books table to mark it as AVAILABLE
+                MySqlCommand updateBook = new MySqlCommand(
+                    "UPDATE books SET Status='AVAILABLE' WHERE BookID=@bookId", conn);
+                updateBook.Parameters.AddWithValue("@bookId", bookId);
+                updateBook.ExecuteNonQuery();
 
-                cmd.Parameters.AddWithValue("@copyId", copyId);
-                int rowsAffected = cmd.ExecuteNonQuery();
+                // ✅ Update the status table for this user and book
+                MySqlCommand updateStatus = new MySqlCommand(
+                    "UPDATE status SET status='RETURNED', return_date=@returnDate " +
+                    "WHERE book_id=@bookId AND user_id=@userId AND status='BORROWED'", conn);
+                updateStatus.Parameters.AddWithValue("@bookId", bookId);
+                updateStatus.Parameters.AddWithValue("@userId", user_data.user_id);
+                updateStatus.Parameters.AddWithValue("@returnDate", DateTime.Now.ToString("yyyy-MM-dd"));
+                int rowsAffected = updateStatus.ExecuteNonQuery();
+
                 if (rowsAffected > 0)
                 {
                     MessageBox.Show("Book returned successfully.");
-                    Form5 form5 = new Form5();
                     this.Close();
+                    Form5 form5 = new Form5();
+                    form5.Show();
                 }
                 else
                 {
                     MessageBox.Show("Failed to return the book. Please try again.");
                 }
+
                 conn.Close();
             }
         }

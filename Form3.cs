@@ -24,26 +24,26 @@ namespace librarysystem
 
         private void LoadBook(string keyword = "", string category = "All")
         {
-            string sql = "SELECT b.book_id, b.title, b.author, b.genre, b.publication_year " +
-                         "FROM tbl_books b";
+            string sql = $"SELECT b.BookID, b.BookTitle, b.Author, b.Genre, b.Pub_Date " +
+                         $"FROM books b";
 
             if (!string.IsNullOrEmpty(keyword))
             {
                 if (category == "All")
                 {
-                    sql += " WHERE b.title LIKE @keyword OR b.author LIKE @keyword OR b.genre LIKE @keyword";
+                    sql += " WHERE b.BookTitle LIKE @keyword OR b.Author LIKE @keyword OR b.Genre LIKE @keyword";
                 }
                 else if (category == "Title")
                 {
-                    sql += " WHERE b.title LIKE @keyword";
+                    sql += " WHERE b.BookTitle LIKE @keyword";
                 }
                 else if (category == "Author")
                 {
-                    sql += " WHERE b.author LIKE @keyword";
+                    sql += " WHERE b.Author LIKE @keyword";
                 }
                 else if (category == "Genre")
                 {
-                    sql += " WHERE b.genre LIKE @keyword";
+                    sql += " WHERE b.Genre LIKE @keyword";
                 }
             }
 
@@ -61,13 +61,15 @@ namespace librarysystem
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
 
+                // Add Summary column if missing
                 if (!dt.Columns.Contains("Summary"))
                     dt.Columns.Add("Summary", typeof(string));
 
+                // Generate simple summaries
                 foreach (DataRow row in dt.Rows)
                 {
-                    string title = row["title"].ToString();
-                    string genre = row["genre"].ToString().ToLower();
+                    string title = row["BookTitle"].ToString();
+                    string genre = row["Genre"].ToString().ToLower();
                     string summary = "";
 
                     if (genre.Contains("horror"))
@@ -98,10 +100,11 @@ namespace librarysystem
             {
                 conn.Open();
 
-                int borrowerId = 0;
+                int userId = 0;
                 int returnedBooks = 0;
 
-                string getUserQuery = "SELECT borrower_id, return_books FROM tbl_borrowers WHERE borrower_name=@username";
+                // Fetch user ID and returned book count
+                string getUserQuery = "SELECT user_id, returned_books FROM users WHERE username=@username";
                 using (MySqlCommand cmd = new MySqlCommand(getUserQuery, conn))
                 {
                     cmd.Parameters.AddWithValue("@username", user_data.currentuser);
@@ -109,12 +112,11 @@ namespace librarysystem
                     {
                         if (reader.Read())
                         {
-                            borrowerId = Convert.ToInt32(reader["borrower_id"]);
-                            returnedBooks = Convert.ToInt32(reader["return_books"]);
+                            userId = Convert.ToInt32(reader["user_id"]);
+                            returnedBooks = Convert.ToInt32(reader["returned_books"]);
                         }
                         else
                         {
-                            // User not found
                             txtBorrowedBooks.Text = "0";
                             txtReturnedBooks.Text = "0";
                             return;
@@ -122,13 +124,15 @@ namespace librarysystem
                     }
                 }
 
-                string borrowedQuery = "SELECT COUNT(*) FROM tbl_book_copies WHERE status='BORROWED' AND borrower_id=@id";
+                // Count borrowed books from 'status' table
+                string borrowedQuery = "SELECT COUNT(*) FROM status WHERE status='BORROWED' AND user_id=@id";
                 using (MySqlCommand cmd = new MySqlCommand(borrowedQuery, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", borrowerId);
+                    cmd.Parameters.AddWithValue("@id", userId);
                     int borrowedCount = Convert.ToInt32(cmd.ExecuteScalar());
                     txtBorrowedBooks.Text = borrowedCount.ToString();
                 }
+
                 txtReturnedBooks.Text = returnedBooks.ToString();
             }
 
@@ -150,6 +154,7 @@ namespace librarysystem
         {
             cmbCategory.Items.AddRange(new string[] { "All", "Title", "Author", "Genre" });
             cmbCategory.SelectedIndex = 0; // Default to All
+
             LoadBook();
             LoadBookCounts();
 
@@ -220,6 +225,11 @@ namespace librarysystem
         }
 
         private void txtBorrowedBooks_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

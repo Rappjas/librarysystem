@@ -14,21 +14,19 @@ namespace librarysystem
     public partial class Form11 : Form
     {
         private int borrowerId;
-        private int copyId;
+        private string bookId;
         private string bookTitle;
         private string bookAuthor;
-        private string borrowerName;
         private string dateBorrowed;
         private decimal fineAmount = 250.00m;
 
-        public Form11(int copyId, string bookTitle, string bookAuthor, string borrowerName, string dateBorrowed, int borrowerId)
+        public Form11(string bookId, string title, string author, int borrowerId, string dateBorrowed)
         {
             InitializeComponent();
 
-            this.copyId = copyId;
+            this.bookId = bookId;
             this.bookTitle = bookTitle;
             this.bookAuthor = bookAuthor;
-            this.borrowerName = borrowerName;
             this.dateBorrowed = dateBorrowed;
 
             lblTitle.Text = bookTitle;
@@ -67,23 +65,24 @@ namespace librarysystem
             {
                 conn.Open();
 
-                MySqlCommand cmdupdate = new MySqlCommand($"UPDATE tbl_book_copies SET status='LOST', lost_date=@lostDate, " +
-                    $"fine=@fine WHERE copy_id=@copyId", conn);
-                cmdupdate.Parameters.AddWithValue("@lostDate", lostDate);
-                cmdupdate.Parameters.AddWithValue("@fine", fine);
-                cmdupdate.Parameters.AddWithValue("@copyId", copyId);
-                cmdupdate.ExecuteNonQuery();
+                //Update books table
+                MySqlCommand updateBook = new MySqlCommand(
+                    "UPDATE books SET Status='LOST' WHERE BookID=@bookId", conn);
+                updateBook.Parameters.AddWithValue("@bookId", bookId);
+                updateBook.ExecuteNonQuery();
 
-                MySqlCommand cmdinsert = new MySqlCommand($"INSERT INTO tbl_lost_books (copy_id, borrower_id, lost_date, fine) " +
-                    $"VALUES (@copyId, @borrowerId, @lostDate, @fine)", conn);
-                cmdinsert.Parameters.AddWithValue("@copyId", copyId);
-                cmdinsert.Parameters.AddWithValue("@borrowerId", borrowerId);
-                cmdinsert.Parameters.AddWithValue("@lostDate", lostDate);
-                cmdinsert.Parameters.AddWithValue("@fine", fine);
+                //Update status table
+                MySqlCommand updateStatus = new MySqlCommand(
+                    "UPDATE status SET status='LOST', return_date=@lostDate " +
+                    "WHERE book_id=@bookId AND user_id=@borrowerId AND status='BORROWED'", conn);
+                updateStatus.Parameters.AddWithValue("@bookId", bookId);
+                updateStatus.Parameters.AddWithValue("@borrowerId", borrowerId);
+                updateStatus.Parameters.AddWithValue("@lostDate", lostDate);
+                updateStatus.ExecuteNonQuery();
 
                 MessageBox.Show("Book marked as lost successfully.");
                 this.Close();
             }
-        }
+        }   
     }
 }

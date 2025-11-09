@@ -15,12 +15,12 @@ namespace librarysystem
 {
     public partial class Form7 : Form
     {
-        private int bookId;
+        private string bookId;
         private string bookTitle;
         private string bookAuthor;
-        private int selectedCopyId;
+
         public int BorrowerId { get; private set; }
-        public Form7(int Id, string title, string author)
+        public Form7(string Id, string title, string author)
         {
             InitializeComponent();
             bookId = Id;
@@ -41,47 +41,48 @@ namespace librarysystem
         {
             //string borrowerName = txtName.Text.Trim();
             //string email = txtEmail.Text.Trim();
-            
-            string dateBorrowed = txtBorrowed.Text.Trim();
-            string Datreturn = dateReturn.Value.ToString("MM/dd/yyyy");
+
+            string borrowedDate = DateTime.Now.ToString("yyyy-MM-dd");
+            string returnDate = DateTime.Now.AddDays(7).ToString("yyyy-MM-dd");
 
             //if (user_data.real_name == "")
             //{
-            //MessageBox.Show("Please enter the borrower's name.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            // return;
+            //    MessageBox.Show("Please enter the borrower's name.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
             //}
 
             using (MySqlConnection conn = new MySqlConnection(connector.connectionString))
             {
                 conn.Open();
 
-                MySqlCommand insertcmd = new MySqlCommand($"INSERT INTO tbl_borrowers (borrower_name, email) " +
-                    $"VALUES (@name, @email)", conn);
-                insertcmd.Parameters.AddWithValue("@name", user_data.real_name);
-                insertcmd.Parameters.AddWithValue("@email", user_data.email);
-                insertcmd.ExecuteNonQuery();
-
-                int borrowerId = (int)insertcmd.LastInsertedId;
+                // Insert borrow record into status table
+                MySqlCommand insertStatus = new MySqlCommand(
+                    $"INSERT INTO status (book_id, journal_id, user_id, status, borrowed_date, return_date, reserved_date) " +
+                    $"VALUES (@bookId, NULL, @userId, 'BORROWED', @borrowedDate, @returnDate, NULL)", conn);
+                insertStatus.Parameters.AddWithValue("@bookId", bookId);
+                insertStatus.Parameters.AddWithValue("@userId", user_data.user_id);
+                insertStatus.Parameters.AddWithValue("@borrowedDate", borrowedDate);
+                insertStatus.Parameters.AddWithValue("@returnDate", returnDate);
+                insertStatus.ExecuteNonQuery();
+                int borrowerId = (int)insertStatus.LastInsertedId;
                 BorrowerId = borrowerId;
 
-                MySqlCommand cmdupd = new MySqlCommand($"UPDATE tbl_book_copies SET status='BORROWED', " +
-                    $"borrower_id=@borrowerId, date_borrow=@dateBorrow, " +
-                    $"date_return=@dateReturn WHERE copy_id=@copyId", conn);
-                cmdupd.Parameters.AddWithValue("@borrowerId", borrowerId);
-                cmdupd.Parameters.AddWithValue("@dateBorrow", dateBorrowed);
-                cmdupd.Parameters.AddWithValue("@dateReturn", Datreturn);
-                cmdupd.Parameters.AddWithValue("@copyId", selectedCopyId);
-                cmdupd.ExecuteNonQuery();
+                MySqlCommand updateBookStatus = new MySqlCommand($"UPDATE books SET Status = 'BORROWED' WHERE BookID = @bookId", conn);
+                updateBookStatus.Parameters.AddWithValue("@bookId", bookId);
+                updateBookStatus.ExecuteNonQuery();
 
                 MessageBox.Show("Book borrowed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Form5 form5 = new Form5();
-                form5.Show();
+
+                // Return to main form
+                Form6 form6 = new Form6();
+                form6.Show();
                 this.Hide();
             }
         }
 
         private void Form7_Load(object sender, EventArgs e)
         {
+            // Set user info from logged-in user_data
             txtEmail.Text = user_data.email;
             txtName.Text = user_data.real_name;
             txtEmail.ReadOnly = true;
@@ -90,25 +91,24 @@ namespace librarysystem
             using (MySqlConnection conn = new MySqlConnection(connector.connectionString))
             {
                 conn.Open();
-                MySqlCommand cmdSelect = new MySqlCommand($"SELECT copy_id FROM tbl_book_copies " +
-                    $"WHERE book_id = @bookId AND status = 'AVAILABLE' LIMIT 1", conn);
-                cmdSelect.Parameters.AddWithValue("@bookId", bookId);
 
-                MySqlDataReader reader = cmdSelect.ExecuteReader();
-                if (reader.Read())
+                // Check if the book is available
+                MySqlCommand cmd = new MySqlCommand(
+                    "SELECT Status FROM books WHERE BookID = @bookId", conn);
+                cmd.Parameters.AddWithValue("@bookId", bookId);
+
+                string status = cmd.ExecuteScalar()?.ToString();
+
+                if (status == null || status.ToLower() != "available")
                 {
-                    selectedCopyId = reader.GetInt32("copy_id");
-                }
-                else
-                {
-                    MessageBox.Show("No available copies to borrow for this book.");
+                    // Book is not available
+                    MessageBox.Show("This book is currently not available to borrow.", "Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.Close();
                 }
-                reader.Close();
+
                 conn.Close();
             }
 
-     
         }
     }
 }

@@ -13,10 +13,10 @@ namespace librarysystem
 {
     public partial class Form12 : Form
     {
-        private int bookId;
+        private string bookId;
         private int borrowerId;
         private string title, author;
-        public Form12(int bookId, int borrowerId, string title, string author)
+        public Form12(string bookId, int borrowerId, string title, string author)
         {
             InitializeComponent();
             this.bookId = bookId;
@@ -49,15 +49,49 @@ namespace librarysystem
             using (MySqlConnection conn = new MySqlConnection(connector.connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand($"INSERT INTO tbl_reservation (book_id, borrower_id, reservation_date,valid_until, status) " +
-                    $"VALUES (@bookId, @borrowerId, @date,@validUntil, 'ACTIVE')", conn);
+
+                // Check the current book status
+                MySqlCommand checkCmd = new MySqlCommand("SELECT Status FROM books WHERE BookID=@bookId", conn);
+                checkCmd.Parameters.AddWithValue("@bookId", bookId);
+                string currentStatus = checkCmd.ExecuteScalar()?.ToString();
+
+                if (string.IsNullOrEmpty(currentStatus))
+                {
+                    MessageBox.Show("Book not found in the database.");
+                    return;
+                }
+
+                // Only allow reservation if book is AVAILABLE or BORROWED
+                if (currentStatus.ToUpper() == "RESERVED")
+                {
+                    MessageBox.Show("This book is already reserved by another user.");
+                    return;
+                }
+                else if (currentStatus.ToUpper() != "AVAILABLE" && currentStatus.ToUpper() != "BORROWED")
+                {
+                    MessageBox.Show("This book cannot be reserved right now.");
+                    return;
+                }
+
+                // Insert reservation into status table
+                MySqlCommand cmd = new MySqlCommand(
+                    "INSERT INTO status (book_id, journal_id, user_id, status, borrowed_date, return_date, reserved_date) " +
+                    "VALUES (@bookId, NULL, @userId, 'RESERVED', NULL, NULL, @reservedDate)", conn);
                 cmd.Parameters.AddWithValue("@bookId", bookId);
-                cmd.Parameters.AddWithValue("@borrowerId", borrowerId);
-                cmd.Parameters.AddWithValue("@date", reservationDate);
-                cmd.Parameters.AddWithValue("@validUntil", validUntil);
+                cmd.Parameters.AddWithValue("@userId", user_data.user_id);
+                cmd.Parameters.AddWithValue("@reservedDate", reservationDate.ToString("yyyy-MM-dd"));
 
                 if (cmd.ExecuteNonQuery() > 0)
                 {
+                    // Only update book status if it's currently AVAILABLE
+                    if (currentStatus.ToUpper() == "AVAILABLE")
+                    {
+                        MySqlCommand updateBookCmd = new MySqlCommand(
+                            "UPDATE books SET Status='RESERVED' WHERE BookID=@bookId", conn);
+                        updateBookCmd.Parameters.AddWithValue("@bookId", bookId);
+                        updateBookCmd.ExecuteNonQuery();
+                    }
+
                     MessageBox.Show("Book reserved successfully!");
                     this.Close();
                 }
@@ -68,6 +102,7 @@ namespace librarysystem
 
                 conn.Close();
             }
+
 
         }
 
