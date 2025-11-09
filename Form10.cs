@@ -42,13 +42,13 @@ namespace librarysystem
             button1.Enabled = true;
             button2.Enabled = false;
             button3.Enabled = false;
-            string dbconnection = "server=127.0.0.1; database=library_db; uid=root;";
+            string dbconnection = "server=127.0.0.1; database=pasiglibrarydb; uid=root;";
 
             using (MySqlConnection conn = new MySqlConnection(dbconnection))
             {
                 conn.Open();
 
-                string query = "SELECT Name, Username, email, Joined FROM tbl_users WHERE User_ID = @userID";
+                string query = "SELECT fullname, username, email, date_registered FROM users WHERE User_ID = @userID";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@userID", user_data.user_id);
 
@@ -56,8 +56,8 @@ namespace librarysystem
 
                 if (reader.Read())
                 {
-                    textBox1.Text = reader["Name"].ToString();
-                    textBox2.Text = reader["Username"].ToString();
+                    textBox1.Text = reader["fullname"].ToString();
+                    textBox2.Text = reader["username"].ToString();
                     textBox3.Text = reader["email"].ToString();
                 }
                 conn.Close();
@@ -72,8 +72,8 @@ namespace librarysystem
                 try
                 {
                     conn.Open();
-                    string updatecmd = $"UPDATE tbl_users SET " +
-                    $"`Name` = @name, `Username` = @newUsername, `email` = @email WHERE `User_ID` = @userID";
+                    string updatecmd = $"UPDATE users SET " +
+                    $"`fullname` = @name, `username` = @newUsername, `email` = @email WHERE `User_ID` = @userID";
                     using (MySqlCommand cmd = new MySqlCommand(updatecmd, conn))
                     {
                         cmd.Parameters.AddWithValue("@name", textBox1.Text);

@@ -42,7 +42,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtlanguage = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtpages = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtpublisher = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -179,20 +181,40 @@
             this.label7.TabIndex = 14;
             this.label7.Text = "PAGES";
             // 
-            // textBox1
+            // txtpages
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(293, 297);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(242, 30);
-            this.textBox1.TabIndex = 15;
+            this.txtpages.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtpages.Location = new System.Drawing.Point(293, 297);
+            this.txtpages.Name = "txtpages";
+            this.txtpages.Size = new System.Drawing.Size(242, 30);
+            this.txtpages.TabIndex = 15;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(25, 341);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(182, 32);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "PUBLISHER";
+            // 
+            // txtpublisher
+            // 
+            this.txtpublisher.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtpublisher.Location = new System.Drawing.Point(293, 344);
+            this.txtpublisher.Name = "txtpublisher";
+            this.txtpublisher.Size = new System.Drawing.Size(242, 30);
+            this.txtpublisher.TabIndex = 17;
             // 
             // add_books
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(800, 397);
+            this.Controls.Add(this.txtpublisher);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.txtpages);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtlanguage);
             this.Controls.Add(this.label6);
@@ -230,6 +252,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtlanguage;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtpages;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtpublisher;
     }
 }
