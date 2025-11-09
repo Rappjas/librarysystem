@@ -28,6 +28,16 @@ namespace librarysystem
 
             return prefix + formattedCode;
         }
+        public static string GeneratebookID()
+        {
+            const string prefix = "BK";
+            Random random = new Random();
+
+            int code = random.Next(0, 1000); // generates from 0–999
+            string formattedCode = code.ToString("D3"); // ensures 3 digits (e.g., 007, 123)
+
+            return prefix + formattedCode;
+        }
     }
 
 }

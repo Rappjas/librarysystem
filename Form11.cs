@@ -31,7 +31,7 @@ namespace librarysystem
 
             lblTitle.Text = bookTitle;
             lblAuthor.Text = bookAuthor;
-            lblName.Text = borrowerName;
+            lblName.Text = user_data.real_name;
             lblDateBorrow.Text = dateBorrowed;
 
             lblLostDate.Text = DateTime.Now.ToString("yyyy-MM-dd");

@@ -26,7 +26,7 @@ namespace librarysystem
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string dbconnection = "server=127.0.0.1; database=book_db; uid=root;";
+            string dbconnection = "server=127.0.0.1; database=pasiglibrarydb; uid=root;";
 
             user_data.currentuser = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();

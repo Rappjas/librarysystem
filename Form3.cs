@@ -100,19 +100,19 @@ namespace librarysystem
             {
                 conn.Open();
 
-                int userId = 0;
+
                 int returnedBooks = 0;
 
                 // Fetch user ID and returned book count
-                string getUserQuery = "SELECT user_id, returned_books FROM users WHERE username=@username";
+                string getUserQuery = "SELECT username, returned_books FROM users WHERE user_id=@userid";
                 using (MySqlCommand cmd = new MySqlCommand(getUserQuery, conn))
                 {
-                    cmd.Parameters.AddWithValue("@username", user_data.currentuser);
+                    cmd.Parameters.AddWithValue("@userid", user_data.user_id);
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            userId = Convert.ToInt32(reader["user_id"]);
+
                             returnedBooks = Convert.ToInt32(reader["returned_books"]);
                         }
                         else
@@ -128,7 +128,7 @@ namespace librarysystem
                 string borrowedQuery = "SELECT COUNT(*) FROM status WHERE status='BORROWED' AND user_id=@id";
                 using (MySqlCommand cmd = new MySqlCommand(borrowedQuery, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", userId);
+                    cmd.Parameters.AddWithValue("@id", user_data.user_id);
                     int borrowedCount = Convert.ToInt32(cmd.ExecuteScalar());
                     txtBorrowedBooks.Text = borrowedCount.ToString();
                 }

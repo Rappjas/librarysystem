@@ -21,7 +21,7 @@ namespace librarysystem
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string con = "server=127.0.0.1; database=library_db; uid=root; pwd=;";
+            string con = "server=127.0.0.1; database=pasiglibrarydb; uid=root;";
             string user = txtUsername.Text.Trim();
             string newpass = txtNewPass.Text.Trim();
             string confirmpass = txtConPass.Text.Trim();
@@ -52,14 +52,14 @@ namespace librarysystem
                 try
                 {
                     conn.Open();
-                    string check = "SELECT COUNT(*) FROM tbl_users WHERE Username=@user";
+                    string check = "SELECT COUNT(*) FROM users WHERE Username=@user";
                     MySqlCommand cmd = new MySqlCommand(check, conn);
                     cmd.Parameters.AddWithValue("@user", user);
                     int count = Convert.ToInt32(cmd.ExecuteScalar());
 
                     if (count > 0)
                     {
-                        string update = "UPDATE tbl_users SET Password=@pass WHERE Username=@user";
+                        string update = "UPDATE users SET Password=@pass WHERE Username=@user";
                         MySqlCommand upcmd = new MySqlCommand(update, conn);
                         upcmd.Parameters.AddWithValue("@pass", newpass);
                         upcmd.Parameters.AddWithValue("@user", user);

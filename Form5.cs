@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Schema;
 
 namespace librarysystem
 {
@@ -42,10 +43,6 @@ namespace librarysystem
                 dataGridView1.DataSource = dt;
                 dataGridView1.ClearSelection();
 
-                if (dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("This borrower has not borrowed any books yet.");
-                }
 
                 conn.Close();
             }
@@ -53,53 +50,55 @@ namespace librarysystem
 
         private void Form5_Load(object sender, EventArgs e)
         {
-            //string dbconnection = "server=127.0.0.1; database=library_db; uid=root; pwd=;";
+            string dbconnection = "server=127.0.0.1; database=pasiglibrarydb; uid=root;";
 
-            //using (MySqlConnection conn = new MySqlConnection(dbconnection))
-            //{
-            //    conn.Open();
+            using (MySqlConnection conn = new MySqlConnection(dbconnection))
+            {
+               conn.Open();
 
-            //    string query = "SELECT Name, Username, Joined FROM tbl_users WHERE User_ID = @userID";
-            //    MySqlCommand cmd = new MySqlCommand(query, conn);
-            //    cmd.Parameters.AddWithValue("@userID", user_data.user_id);
+                string query = "SELECT fullname, Username, date_registered FROM users WHERE User_ID = @userID";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@userID", user_data.user_id);
 
-            //    MySqlDataReader reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
-            //    if (reader.Read())
-            //    {
-            //        label1.Text = reader["Name"].ToString();
-            //        label2.Text = reader["Username"].ToString();
+                if (reader.Read())
+                {
+                    label1.Text = reader["fullname"].ToString();
+                    label2.Text = reader["Username"].ToString();
 
-            //        if (reader["Joined"] != DBNull.Value)
-            //        {
-            //            label3.Text = Convert.ToDateTime(reader["Joined"]).ToString("MMMM dd, yyyy");
-            //        }
-            //        else
-            //        {
-            //            label3.Text = "N/A";
-            //        }
-            //    }
+                    if (reader["date_registered"] != DBNull.Value)
+                    {
+                        label3.Text = reader["date_registered"].ToString();
+                        ;
+                    }
+                    else
+                    {
+                        label3.Text = "N/A";
+                    }
+                }
 
-            //    lblWelcome.Text = "Welcome, " + user_data.currentuser + "!";
-            //} 
+                lblWelcome.Text = "Welcome, " + user_data.currentuser + "!";
+            }
+            LoadBorrowedBooks();
             
-            //// sa user history ito //
-            //using (MySqlConnection conn = new MySqlConnection(connector.connectionString))
-            //{
-            //    conn.Open();
-            //    MySqlCommand cmd = new MySqlCommand($"SELECT bc.copy_id, b.title, bc.date_borrow, bc.date_return, br.borrower_name " +
-            //            $"FROM tbl_book_copies bc " +
-            //            $"JOIN tbl_books b ON bc.book_id = b.book_id " +
-            //            $"JOIN tbl_borrowers br ON bc.borrower_id = br.borrower_id " +
-            //            $"WHERE br.borrower_name = @name AND bc.status = 'BORROWED'", conn);
-            //    cmd.Parameters.AddWithValue("@name", user_data.real_name);
-            //    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-            //    DataTable dt = new DataTable();
-            //    da.Fill(dt);
-            //    dataGridView1.DataSource = dt;
-            //    dataGridView1.ClearSelection();
-            //    conn.Close();
-            //}
+            // sa user history ito //
+            /*using (MySqlConnection conn = new MySqlConnection(connector.connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand($"SELECT bc.copy_id, b.title, bc.date_borrow, bc.date_return, br.borrower_name " +
+                        $"FROM tbl_book_copies bc " +
+                        $"JOIN tbl_books b ON bc.book_id = b.book_id " +
+                        $"JOIN tbl_borrowers br ON bc.borrower_id = br.borrower_id " +
+                        $"WHERE br.borrower_name = @name AND bc.status = 'BORROWED'", conn);
+                cmd.Parameters.AddWithValue("@name", user_data.real_name);
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dataGridView1.DataSource = dt;
+                dataGridView1.ClearSelection();
+               conn.Close();
+            }*/
         }
 
         private void label3_Click(object sender, EventArgs e)
