@@ -103,8 +103,8 @@ namespace librarysystem
 
                 int returnedBooks = 0;
 
-                // Fetch user ID and returned book count
-                string getUserQuery = "SELECT username, returned_books FROM users WHERE user_id=@userid";
+
+                string getUserQuery = "SELECT returned_books FROM users WHERE user_id=@userid";
                 using (MySqlCommand cmd = new MySqlCommand(getUserQuery, conn))
                 {
                     cmd.Parameters.AddWithValue("@userid", user_data.user_id);
@@ -123,8 +123,6 @@ namespace librarysystem
                         }
                     }
                 }
-
-                // Count borrowed books from 'status' table
                 string borrowedQuery = "SELECT COUNT(*) FROM status WHERE status='BORROWED' AND user_id=@id";
                 using (MySqlCommand cmd = new MySqlCommand(borrowedQuery, conn))
                 {

@@ -130,7 +130,7 @@ namespace librarysystem
 
         private void button2_Click(object sender, EventArgs e)
         {
-            /*if (borrowerId == 0)
+            if (string.IsNullOrEmpty(user_data.user_id))
             {
                 MessageBox.Show("You have not borrowed any books yet.");
                 return;
@@ -139,7 +139,6 @@ namespace librarysystem
             Form9 bview = new Form9();
             bview.Show();
             this.Hide();
-            */
         }
 
         private void button1_Click(object sender, EventArgs e)

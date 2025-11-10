@@ -134,7 +134,7 @@
             this.button2.Location = new System.Drawing.Point(112, 322);
             this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(157, 37);
+            this.button2.Size = new System.Drawing.Size(195, 37);
             this.button2.TabIndex = 9;
             this.button2.Text = "Book Collection";
             this.button2.UseVisualStyleBackColor = true;
@@ -142,10 +142,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(112, 423);
+            this.button3.Location = new System.Drawing.Point(112, 406);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(157, 37);
+            this.button3.Size = new System.Drawing.Size(195, 37);
             this.button3.TabIndex = 10;
             this.button3.Text = "Settings";
             this.button3.UseVisualStyleBackColor = true;
