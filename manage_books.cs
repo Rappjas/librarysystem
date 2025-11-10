@@ -34,7 +34,8 @@ namespace librarysystem
         }
         private void button2_Click(object sender, EventArgs e)
         {
-
+            manage_copy managecopyForm = new manage_copy();
+            managecopyForm.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -82,6 +83,13 @@ namespace librarysystem
                     MessageBox.Show("Book deleted successfully.");
                 }
             }
+        }
+
+        private void btnMemMng_Click(object sender, EventArgs e)
+        {
+            member_management memberManagementForm = new member_management();
+            memberManagementForm.Show();
+            this.Hide();
         }
     }
 }
