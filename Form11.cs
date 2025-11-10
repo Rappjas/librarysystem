@@ -44,6 +44,7 @@ namespace librarysystem
 
         private void button1_Click(object sender, EventArgs e)
         {
+
             string lostDate = DateTime.Now.ToString("yyyy-MM-dd");
             string fineText = txtFineAmount.Text.Trim();
 
@@ -72,9 +73,21 @@ namespace librarysystem
                 updateStatus.Parameters.AddWithValue("@lostDate", lostDate);
                 updateStatus.ExecuteNonQuery();
 
+                //Update fine of user
+                MySqlCommand updateUser = new MySqlCommand(
+                    "UPDATE users SET fines_fees = fines_fees + @fine WHERE user_id = @borrowerId", conn);
+                updateUser.Parameters.AddWithValue("@borrowerId", user_data.user_id);
+                updateUser.Parameters.AddWithValue("@fine", fine);
+                updateUser.ExecuteNonQuery();
+
                 MessageBox.Show("Book marked as lost successfully.");
                 this.Close();
             }
-        }   
+        }
+
+        private void txtFineAmount_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

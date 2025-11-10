@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace librarysystem
 {
@@ -16,7 +17,6 @@ namespace librarysystem
         public manage_books()
         {
             InitializeComponent();
-            loadBooks();
         }
 
         private void loadBooks()
@@ -100,21 +100,13 @@ namespace librarysystem
             this.Hide();
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(
-                "Are you sure you want to logout?",
-                "Confirm Logout",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            );       
+            reports reportsForm = new reports();
+            reportsForm.Show();
+            this.Hide();
 
-            if (result == DialogResult.Yes)
-            {
-                Form2 loginForm = new Form2();
-                loginForm.Show();
-                this.Hide();
-            }
+
         }
     }
 }

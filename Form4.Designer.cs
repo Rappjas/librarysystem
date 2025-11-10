@@ -55,6 +55,7 @@
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(226, 21);
             this.txtUsername.TabIndex = 4;
+            this.txtUsername.TextChanged += new System.EventHandler(this.txtUsername_TextChanged);
             // 
             // txtNewPass
             // 

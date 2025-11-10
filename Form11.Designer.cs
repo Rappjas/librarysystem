@@ -57,6 +57,7 @@
             this.txtFineAmount.Name = "txtFineAmount";
             this.txtFineAmount.Size = new System.Drawing.Size(245, 22);
             this.txtFineAmount.TabIndex = 1;
+            this.txtFineAmount.TextChanged += new System.EventHandler(this.txtFineAmount_TextChanged);
             // 
             // lblName
             // 
