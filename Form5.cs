@@ -19,7 +19,6 @@ namespace librarysystem
         public Form5()
         {
             InitializeComponent();
-            this.borrowerId = borrowerId;
             LoadBorrowedBooks();
         }
         private void LoadBorrowedBooks()
@@ -34,7 +33,7 @@ namespace librarysystem
                     "FROM status s " +
                     "JOIN books b ON s.book_id = b.BookID " +
                     "WHERE s.user_id = @borrowerId AND s.status = 'BORROWED'", conn);
-                cmd.Parameters.AddWithValue("@borrowerId", borrowerId);
+                cmd.Parameters.AddWithValue("@borrowerId", user_data.user_id);
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 DataTable dt = new DataTable();

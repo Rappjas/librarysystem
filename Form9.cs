@@ -13,11 +13,9 @@ namespace librarysystem
 {
     public partial class Form9 : Form
     {
-        private int borrowerId;
         public Form9()
         {
             InitializeComponent();
-            this.borrowerId = borrowerId;
             LoadBorrowedBooks();
         }
 
@@ -29,11 +27,11 @@ namespace librarysystem
 
 
                 MySqlCommand cmd = new MySqlCommand(
-                    "SELECT b.BookID, b.BookTitle, b.Author, s.borrowed_date, s.return_date " +
+                    "SELECT s.StatusId, b.BookID, b.BookTitle, b.Author, s.borrowed_date, s.return_date " +
                     "FROM status s " +
                     "JOIN books b ON s.book_id = b.BookID " +
-                    "WHERE s.user_id = @borrowerId AND s.status = 'BORROWED'", conn);
-                cmd.Parameters.AddWithValue("@borrowerId", borrowerId);
+                    "WHERE s.user_id = @userId AND s.status = 'BORROWED'", conn);
+                cmd.Parameters.AddWithValue("@userId", user_data.user_id);
 
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
@@ -57,11 +55,12 @@ namespace librarysystem
                 MessageBox.Show("Please select a borrowed book first.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            
             // book info
-            string bookId = dataGridView1.SelectedRows[0].Cells["BookID"].Value.ToString();
-            string title = dataGridView1.SelectedRows[0].Cells["BookTitle"].Value.ToString();
-            string author = dataGridView1.SelectedRows[0].Cells["Author"].Value.ToString();
+            status_data.statusID = dataGridView1.SelectedRows[0].Cells["StatusID"].Value.ToString();
+            book_data.currentbookid = dataGridView1.SelectedRows[0].Cells["BookID"].Value.ToString();
+            book_data.currentbookname = dataGridView1.SelectedRows[0].Cells["BookTitle"].Value.ToString();
+            book_data.currentbookauthor = dataGridView1.SelectedRows[0].Cells["Author"].Value.ToString();
             string dateBorrowed = dataGridView1.SelectedRows[0].Cells["borrowed_date"].Value.ToString();
             string dateReturn = dataGridView1.SelectedRows[0].Cells["return_date"].Value.ToString();
 
@@ -81,13 +80,13 @@ namespace librarysystem
             if (dataGridView1.SelectedRows.Count == 0) return;
 
             DataGridViewRow row = dataGridView1.SelectedRows[0];
-            string bookId = row.Cells["BookID"].Value.ToString();
-            string title = row.Cells["BookTitle"].Value.ToString();
-            string author = row.Cells["Author"].Value.ToString();
+            book_data.currentbookid = row.Cells["BookID"].Value.ToString();
+            book_data.currentbookname = row.Cells["BookTitle"].Value.ToString();
+            book_data.currentbookauthor = row.Cells["Author"].Value.ToString();
             string dateBorrowed = row.Cells["borrowed_date"].Value.ToString();
 
             // Open Form11 for actions like marking lost or extending
-            Form11 form11 = new Form11(bookId, title, author, borrowerId, dateBorrowed);
+            Form11 form11 = new Form11(dateBorrowed);
             form11.Show();
             this.Hide();
         }

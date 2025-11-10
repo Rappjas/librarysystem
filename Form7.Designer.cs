@@ -38,7 +38,6 @@
             this.txtBorrowed = new System.Windows.Forms.TextBox();
             this.dateReturn = new System.Windows.Forms.DateTimePicker();
             this.btnBorrow = new System.Windows.Forms.Button();
-            this.txtContact = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +45,7 @@
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(-1, -1);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(681, 444);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -56,7 +55,7 @@
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(118, 110);
-            this.txtName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtName.Margin = new System.Windows.Forms.Padding(2);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(236, 20);
             this.txtName.TabIndex = 1;
@@ -64,7 +63,7 @@
             // txtEmail
             // 
             this.txtEmail.Location = new System.Drawing.Point(118, 145);
-            this.txtEmail.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(2);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(236, 20);
             this.txtEmail.TabIndex = 2;
@@ -72,7 +71,7 @@
             // txtBookId
             // 
             this.txtBookId.Location = new System.Drawing.Point(130, 262);
-            this.txtBookId.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtBookId.Margin = new System.Windows.Forms.Padding(2);
             this.txtBookId.Name = "txtBookId";
             this.txtBookId.Size = new System.Drawing.Size(192, 20);
             this.txtBookId.TabIndex = 4;
@@ -80,7 +79,7 @@
             // txtTitle
             // 
             this.txtTitle.Location = new System.Drawing.Point(130, 306);
-            this.txtTitle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtTitle.Margin = new System.Windows.Forms.Padding(2);
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(192, 20);
             this.txtTitle.TabIndex = 5;
@@ -88,7 +87,7 @@
             // txtAuthor
             // 
             this.txtAuthor.Location = new System.Drawing.Point(130, 353);
-            this.txtAuthor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtAuthor.Margin = new System.Windows.Forms.Padding(2);
             this.txtAuthor.Name = "txtAuthor";
             this.txtAuthor.Size = new System.Drawing.Size(192, 20);
             this.txtAuthor.TabIndex = 6;
@@ -96,7 +95,7 @@
             // txtBorrowed
             // 
             this.txtBorrowed.Location = new System.Drawing.Point(361, 289);
-            this.txtBorrowed.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtBorrowed.Margin = new System.Windows.Forms.Padding(2);
             this.txtBorrowed.Name = "txtBorrowed";
             this.txtBorrowed.Size = new System.Drawing.Size(263, 20);
             this.txtBorrowed.TabIndex = 7;
@@ -104,7 +103,7 @@
             // dateReturn
             // 
             this.dateReturn.Location = new System.Drawing.Point(361, 352);
-            this.dateReturn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dateReturn.Margin = new System.Windows.Forms.Padding(2);
             this.dateReturn.Name = "dateReturn";
             this.dateReturn.Size = new System.Drawing.Size(263, 20);
             this.dateReturn.TabIndex = 8;
@@ -112,7 +111,7 @@
             // btnBorrow
             // 
             this.btnBorrow.Location = new System.Drawing.Point(533, 385);
-            this.btnBorrow.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBorrow.Margin = new System.Windows.Forms.Padding(2);
             this.btnBorrow.Name = "btnBorrow";
             this.btnBorrow.Size = new System.Drawing.Size(89, 30);
             this.btnBorrow.TabIndex = 9;
@@ -120,20 +119,11 @@
             this.btnBorrow.UseVisualStyleBackColor = true;
             this.btnBorrow.Click += new System.EventHandler(this.btnBorrow_Click);
             // 
-            // txtContact
-            // 
-            this.txtContact.Location = new System.Drawing.Point(120, 196);
-            this.txtContact.Margin = new System.Windows.Forms.Padding(2);
-            this.txtContact.Name = "txtContact";
-            this.txtContact.Size = new System.Drawing.Size(236, 20);
-            this.txtContact.TabIndex = 10;
-            // 
             // Form7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(672, 443);
-            this.Controls.Add(this.txtContact);
             this.Controls.Add(this.btnBorrow);
             this.Controls.Add(this.dateReturn);
             this.Controls.Add(this.txtBorrowed);
@@ -143,7 +133,7 @@
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.pictureBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form7";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form7";
@@ -165,6 +155,5 @@
         private System.Windows.Forms.TextBox txtBorrowed;
         private System.Windows.Forms.DateTimePicker dateReturn;
         private System.Windows.Forms.Button btnBorrow;
-        private System.Windows.Forms.TextBox txtContact;
     }
 }

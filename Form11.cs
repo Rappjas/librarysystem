@@ -13,31 +13,23 @@ namespace librarysystem
 {
     public partial class Form11 : Form
     {
-        private int borrowerId;
-        private string bookId;
-        private string bookTitle;
-        private string bookAuthor;
         private string dateBorrowed;
         private decimal fineAmount = 250.00m;
 
-        public Form11(string bookId, string title, string author, int borrowerId, string dateBorrowed)
+        public Form11(string dateBorrowed)
         {
             InitializeComponent();
 
-            this.bookId = bookId;
-            this.bookTitle = bookTitle;
-            this.bookAuthor = bookAuthor;
             this.dateBorrowed = dateBorrowed;
 
-            lblTitle.Text = bookTitle;
-            lblAuthor.Text = bookAuthor;
+            lblTitle.Text = book_data.currentbookname;
+            lblAuthor.Text = book_data.currentbookauthor;
             lblName.Text = user_data.real_name;
             lblDateBorrow.Text = dateBorrowed;
 
             lblLostDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
 
             txtFineAmount.Text = fineAmount.ToString("0.00");
-            this.borrowerId = borrowerId;
         }
 
         private void Form11_Load(object sender, EventArgs e)
@@ -68,15 +60,15 @@ namespace librarysystem
                 //Update books table
                 MySqlCommand updateBook = new MySqlCommand(
                     "UPDATE books SET Status='LOST' WHERE BookID=@bookId", conn);
-                updateBook.Parameters.AddWithValue("@bookId", bookId);
+                updateBook.Parameters.AddWithValue("@bookId", book_data.currentbookid);
                 updateBook.ExecuteNonQuery();
 
                 //Update status table
                 MySqlCommand updateStatus = new MySqlCommand(
                     "UPDATE status SET status='LOST', return_date=@lostDate " +
                     "WHERE book_id=@bookId AND user_id=@borrowerId AND status='BORROWED'", conn);
-                updateStatus.Parameters.AddWithValue("@bookId", bookId);
-                updateStatus.Parameters.AddWithValue("@borrowerId", borrowerId);
+                updateStatus.Parameters.AddWithValue("@bookId", book_data.currentbookid);
+                updateStatus.Parameters.AddWithValue("@borrowerId", user_data.user_id);
                 updateStatus.Parameters.AddWithValue("@lostDate", lostDate);
                 updateStatus.ExecuteNonQuery();
 

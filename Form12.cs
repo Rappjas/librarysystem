@@ -13,19 +13,11 @@ namespace librarysystem
 {
     public partial class Form12 : Form
     {
-        private string bookId;
-        private int borrowerId;
-        private string title, author;
         public Form12()
         {
             InitializeComponent();
-            this.bookId = bookId;
-            this.borrowerId = borrowerId;
-            this.title = title;
-            this.author = author;
-
-            lblTitle.Text = $"Title : {title}";
-            lblAuthor.Text = $"Author : {author}";
+            lblTitle.Text = $"Title : {book_data.currentbookname}";
+            lblAuthor.Text = $"Author : {book_data.currentbookauthor}";
             lblDatetoday.Text = $"{DateTime.Now.ToShortDateString()}";
             dateTimePicker1.Value = DateTime.Now.AddDays(7);
         }
@@ -52,7 +44,7 @@ namespace librarysystem
 
                 // Check the current book status
                 MySqlCommand checkCmd = new MySqlCommand("SELECT Status FROM books WHERE BookID=@bookId", conn);
-                checkCmd.Parameters.AddWithValue("@bookId", bookId);
+                checkCmd.Parameters.AddWithValue("@bookId", book_data.currentbookid);
                 string currentStatus = checkCmd.ExecuteScalar()?.ToString();
 
                 if (string.IsNullOrEmpty(currentStatus))
@@ -77,7 +69,7 @@ namespace librarysystem
                 MySqlCommand cmd = new MySqlCommand(
                     "INSERT INTO status (book_id, journal_id, user_id, status, borrowed_date, return_date, reserved_date) " +
                     "VALUES (@bookId, NULL, @userId, 'RESERVED', NULL, NULL, @reservedDate)", conn);
-                cmd.Parameters.AddWithValue("@bookId", bookId);
+                cmd.Parameters.AddWithValue("@bookId", book_data.currentbookid);
                 cmd.Parameters.AddWithValue("@userId", user_data.user_id);
                 cmd.Parameters.AddWithValue("@reservedDate", reservationDate.ToString("yyyy-MM-dd"));
 
@@ -88,7 +80,7 @@ namespace librarysystem
                     {
                         MySqlCommand updateBookCmd = new MySqlCommand(
                             "UPDATE books SET Status='RESERVED' WHERE BookID=@bookId", conn);
-                        updateBookCmd.Parameters.AddWithValue("@bookId", bookId);
+                        updateBookCmd.Parameters.AddWithValue("@bookId", book_data.currentbookid);
                         updateBookCmd.ExecuteNonQuery();
                     }
 

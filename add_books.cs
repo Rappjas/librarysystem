@@ -57,6 +57,7 @@ namespace librarysystem
                 cmd.ExecuteNonQuery();
 
                 MessageBox.Show("Book added successfully!");
+                this.Hide();
             }
         }
     }

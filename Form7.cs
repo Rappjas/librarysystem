@@ -15,10 +15,6 @@ namespace librarysystem
 {
     public partial class Form7 : Form
     {
-        private string bookId;
-        private string bookTitle;
-        private string bookAuthor;
-
         public int BorrowerId { get; private set; }
         public Form7()
         {
@@ -37,17 +33,8 @@ namespace librarysystem
 
         private void btnBorrow_Click(object sender, EventArgs e)
         {
-            //string borrowerName = txtName.Text.Trim();
-            //string email = txtEmail.Text.Trim();
-
             string borrowedDate = DateTime.Now.ToString("yyyy-MM-dd");
             string returnDate = DateTime.Now.AddDays(7).ToString("yyyy-MM-dd");
-
-            //if (user_data.real_name == "")
-            //{
-            //    MessageBox.Show("Please enter the borrower's name.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
 
             using (MySqlConnection conn = new MySqlConnection(connector.connectionString))
             {

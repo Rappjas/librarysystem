@@ -65,5 +65,12 @@ namespace librarysystem
             manageBooksForm.Show();
             this.Hide();
         }
+
+        private void btnCirMng_Click(object sender, EventArgs e)
+        {
+            circulation circulationManagementForm = new circulation();
+            circulationManagementForm.Show();
+            this.Hide();
+        }
     }
 }

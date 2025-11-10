@@ -16,7 +16,6 @@ namespace librarysystem
 {
     public partial class Form6 : Form
     {
-        //private int borrowerId;
         public Form6()
         {
             InitializeComponent();
@@ -26,7 +25,7 @@ namespace librarysystem
         private void Form6_Load(object sender, EventArgs e)
         {
             cmbCategory.Items.AddRange(new string[] { "All", "Title", "Author", "Genre" });
-            cmbCategory.SelectedIndex = 0; // Default to All
+            cmbCategory.SelectedIndex = 0;
             LoadBook();
 
             lblWelcome.Text = "Welcome, " + user_data.currentuser + "!";
@@ -38,7 +37,7 @@ namespace librarysystem
 
             if (!string.IsNullOrEmpty(keyword))
             {
-                keyword = "%" + keyword + "%"; // For LIKE
+                keyword = "%" + keyword + "%";
                 if (category == "All")
                 {
                     sql += " WHERE BookTitle LIKE @keyword OR Author LIKE @keyword OR Genre LIKE @keyword";
@@ -69,7 +68,6 @@ namespace librarysystem
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                // Add image column if it doesn't exist
                 if (!dt.Columns.Contains("images"))
                     dt.Columns.Add("images", typeof(Bitmap));
 
@@ -216,12 +214,11 @@ namespace librarysystem
                 return;
             }
 
-            string bookId = row.Cells["BookID"].Value.ToString();
-            string title = row.Cells["BookTitle"].Value.ToString();
-            string author = row.Cells["Author"].Value.ToString();
-            //int borrowerId = this.borrowerId;
+            book_data.currentbookid = row.Cells["BookID"].Value.ToString();
+            book_data.currentbookname = row.Cells["BookTitle"].Value.ToString();
+            book_data.currentbookauthor = row.Cells["Author"].Value.ToString();
 
-            Form12 form12 = new Form12(); // Adjust Form12 for string BookID
+            Form12 form12 = new Form12();
             form12.Show();
             this.Hide();
 

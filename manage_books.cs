@@ -34,8 +34,8 @@ namespace librarysystem
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            manage_copy managecopyForm = new manage_copy();
-            managecopyForm.Show();
+            add_books addbooksForm = new add_books();
+            addbooksForm.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -89,6 +89,13 @@ namespace librarysystem
         {
             member_management memberManagementForm = new member_management();
             memberManagementForm.Show();
+            this.Hide();
+        }
+
+        private void btnCirMng_Click(object sender, EventArgs e)
+        {
+            circulation circulationManagementForm = new circulation();
+            circulationManagementForm.Show();
             this.Hide();
         }
     }

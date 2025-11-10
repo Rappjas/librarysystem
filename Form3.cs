@@ -68,22 +68,22 @@ namespace librarysystem
                 // Generate simple summaries
                 foreach (DataRow row in dt.Rows)
                 {
-                    string title = row["BookTitle"].ToString();
+                    book_data.currentbookname = row["BookTitle"].ToString();
                     string genre = row["Genre"].ToString().ToLower();
                     string summary = "";
 
                     if (genre.Contains("horror"))
-                        summary = $"A chilling horror story titled '{title}', filled with suspense and mystery.";
+                        summary = $"A chilling horror story titled '{book_data.currentbookname}', filled with suspense and mystery.";
                     else if (genre.Contains("romance"))
-                        summary = $"A heartwarming romance novel about love and destiny in '{title}'.";
+                        summary = $"A heartwarming romance novel about love and destiny in '{book_data.currentbookname}'.";
                     else if (genre.Contains("fantasy"))
-                        summary = $"An imaginative fantasy tale with adventure and magic in '{title}'.";
+                        summary = $"An imaginative fantasy tale with adventure and magic in '{book_data.currentbookname}'.";
                     else if (genre.Contains("science"))
-                        summary = $"A fascinating science-themed book exploring discoveries in '{title}'.";
+                        summary = $"A fascinating science-themed book exploring discoveries in '{book_data.currentbookname}'.";
                     else if (genre.Contains("fiction"))
-                        summary = $"A captivating fiction story that brings imagination to life in '{title}'.";
+                        summary = $"A captivating fiction story that brings imagination to life in '{book_data.currentbookname}'.";
                     else
-                        summary = $"An interesting book titled '{title}' from the {genre} genre.";
+                        summary = $"An interesting book titled '{book_data.currentbookname}' from the {genre} genre.";
 
                     row["Summary"] = summary;
                 }

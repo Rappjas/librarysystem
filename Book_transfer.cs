@@ -15,4 +15,8 @@ namespace librarysystem
         public static string currentbookname { get; set; }
         public static string currentbookauthor { get; set; }
     }
+    public class status_data
+    {
+        public static string statusID { get; set; }
+    }
 }

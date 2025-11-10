@@ -40,6 +40,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnMemMng = new System.Windows.Forms.Button();
+            this.btnCirMng = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -90,9 +91,9 @@
             this.button2.Location = new System.Drawing.Point(185, 374);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(90, 26);
+            this.button2.Size = new System.Drawing.Size(76, 26);
             this.button2.TabIndex = 4;
-            this.button2.Text = "Manage Books";
+            this.button2.Text = "Add Books";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -156,11 +157,22 @@
             this.btnMemMng.UseVisualStyleBackColor = true;
             this.btnMemMng.Click += new System.EventHandler(this.btnMemMng_Click);
             // 
+            // btnCirMng
+            // 
+            this.btnCirMng.Location = new System.Drawing.Point(56, 198);
+            this.btnCirMng.Name = "btnCirMng";
+            this.btnCirMng.Size = new System.Drawing.Size(105, 50);
+            this.btnCirMng.TabIndex = 11;
+            this.btnCirMng.Text = "Circulation Management";
+            this.btnCirMng.UseVisualStyleBackColor = true;
+            this.btnCirMng.Click += new System.EventHandler(this.btnCirMng_Click);
+            // 
             // manage_books
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 438);
+            this.Controls.Add(this.btnCirMng);
             this.Controls.Add(this.btnMemMng);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.comboBox1);
@@ -195,5 +207,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnMemMng;
+        private System.Windows.Forms.Button btnCirMng;
     }
 }

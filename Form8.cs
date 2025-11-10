@@ -32,9 +32,8 @@ namespace librarysystem
             {
                 conn.Open();
 
-                // ✅ Update the books table to mark it as AVAILABLE
                 MySqlCommand updateBook = new MySqlCommand(
-                    "UPDATE books SET Status='AVAILABLE' WHERE BookID=@bookId", conn);
+                "UPDATE books SET Status='AVAILABLE' WHERE BookID=@bookId", conn);
                 updateBook.Parameters.AddWithValue("@bookId", book_data.currentbookid);
                 updateBook.ExecuteNonQuery();
 
@@ -45,7 +44,7 @@ namespace librarysystem
                 updateUser.Parameters.AddWithValue("@uid", user_data.user_id);
                 updateUser.ExecuteNonQuery();
 
-                // ✅ Update the status table for this user and book
+
                 MySqlCommand updateStatus = new MySqlCommand(
                     "UPDATE status SET status='RETURNED', return_date=@returnDate " +
                     "WHERE book_id=@bookId AND user_id=@userId AND status='BORROWED'", conn);
