@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace librarysystem
 {
@@ -16,30 +15,6 @@ namespace librarysystem
         public member_management()
         {
             InitializeComponent();
-        }
-
-        private void loadUsers()
-        {
-            try
-            {
-                string query = "SELECT user_id, role, username, email, fullname, date_registered, borrowed_books, fines_fees FROM users";
-                using (MySqlConnection conn = new MySqlConnection(connector.connectionString))
-                {
-                    conn.Open();
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-
-                    da.Fill(dt);
-
-                    dataGridView1.DataSource = dt;
-                    dataGridView1.ClearSelection();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occurred while loading user data: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void button1_Click(object sender, EventArgs e)
