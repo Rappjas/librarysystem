@@ -72,5 +72,22 @@ namespace librarysystem
             circulationManagementForm.Show();
             this.Hide();
         }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to logout?",
+                "Confirm Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                Form2 loginForm = new Form2();
+                loginForm.Show();
+                this.Hide();
+            }
+        }
     }
 }

@@ -41,6 +41,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnMemMng = new System.Windows.Forms.Button();
             this.btnCirMng = new System.Windows.Forms.Button();
+            this.btnLogout = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -167,11 +168,22 @@
             this.btnCirMng.UseVisualStyleBackColor = true;
             this.btnCirMng.Click += new System.EventHandler(this.btnCirMng_Click);
             // 
+            // btnLogout
+            // 
+            this.btnLogout.Location = new System.Drawing.Point(580, 24);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(72, 34);
+            this.btnLogout.TabIndex = 12;
+            this.btnLogout.Text = "Log Out";
+            this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
             // manage_books
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 438);
+            this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.btnCirMng);
             this.Controls.Add(this.btnMemMng);
             this.Controls.Add(this.dataGridView1);
@@ -208,5 +220,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnMemMng;
         private System.Windows.Forms.Button btnCirMng;
+        private System.Windows.Forms.Button btnLogout;
     }
 }

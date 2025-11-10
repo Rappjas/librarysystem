@@ -17,6 +17,11 @@ namespace librarysystem
         {
             InitializeComponent();
             LoadCirculationData();
+            if (cbxFilter.SelectedIndex == -1)
+            {
+                cbxFilter.SelectedIndex = 0;
+            }
+            cbxFilter.SelectedIndexChanged += cbxFilter_SelectedIndexChanged;
         }
 
         private void btnBookMng_Click(object sender, EventArgs e)
@@ -33,8 +38,19 @@ namespace librarysystem
             this.Hide();
         }
 
+        private void cbxFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadCirculationData();
+        }
+
         private void LoadCirculationData()
         {
+            string selectedStatus = cbxFilter.SelectedItem?.ToString();
+            string statusCirculation = "%";
+            if (selectedStatus != null && !selectedStatus.StartsWith("Status", StringComparison.OrdinalIgnoreCase))
+            {
+                statusCirculation = selectedStatus;
+            }
             string sqlQuery = @"
                 SELECT
                     s.StatusID AS 'Transaction ID',
@@ -60,32 +76,46 @@ namespace librarysystem
                     books b ON UPPER(s.book_id) = UPPER(b.BookID)
                 LEFT JOIN
                     journals j ON UPPER(s.journal_id) = UPPER(j.JournalID)
-                WHERE
-                    s.status IN ('BORROWED', 'RESERVED')
+                WHERE s.status LIKE @StatusFilter
                 ORDER BY
-                    s.return_date ASC;";
+                    s.return_date ASC";
+
 
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connector.connectionString))
                 {
                     connection.Open();
-                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter(sqlQuery, connection);
+                    MySqlCommand command = new MySqlCommand(sqlQuery, connection);
+                    command.Parameters.AddWithValue("@StatusFilter", statusCirculation);
+                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command);
                     DataTable dataTable = new DataTable();
                     dataAdapter.Fill(dataTable);
 
                     dataGridView1.DataSource = dataTable;
                     dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-
-                    if (dataTable.Rows.Count == 0)
-                    {
-                        MessageBox.Show("Query executed successfully, but zero active rows were found.", "Debug info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading circulation data: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to logout?",
+                "Confirm Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                Form2 loginForm = new Form2();
+                loginForm.Show();
+                this.Hide();
             }
         }
     }
