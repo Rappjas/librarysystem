@@ -32,12 +32,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.txtAuthor = new System.Windows.Forms.TextBox();
             this.txtYear = new System.Windows.Forms.TextBox();
-            this.txtCopies = new System.Windows.Forms.TextBox();
             this.cbGenre = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtlanguage = new System.Windows.Forms.TextBox();
@@ -45,6 +43,8 @@
             this.txtpages = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtpublisher = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtstatus = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -87,16 +87,6 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "YEAR";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(25, 200);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(227, 32);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "NO OF COPIES";
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(635, 43);
@@ -131,14 +121,6 @@
             this.txtYear.Size = new System.Drawing.Size(242, 30);
             this.txtYear.TabIndex = 9;
             // 
-            // txtCopies
-            // 
-            this.txtCopies.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCopies.Location = new System.Drawing.Point(293, 200);
-            this.txtCopies.Name = "txtCopies";
-            this.txtCopies.Size = new System.Drawing.Size(242, 30);
-            this.txtCopies.TabIndex = 10;
-            // 
             // cbGenre
             // 
             this.cbGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -157,7 +139,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(25, 247);
+            this.label6.Location = new System.Drawing.Point(25, 197);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(179, 32);
             this.label6.TabIndex = 12;
@@ -166,7 +148,7 @@
             // txtlanguage
             // 
             this.txtlanguage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtlanguage.Location = new System.Drawing.Point(293, 250);
+            this.txtlanguage.Location = new System.Drawing.Point(293, 200);
             this.txtlanguage.Name = "txtlanguage";
             this.txtlanguage.Size = new System.Drawing.Size(242, 30);
             this.txtlanguage.TabIndex = 13;
@@ -175,7 +157,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(25, 294);
+            this.label7.Location = new System.Drawing.Point(25, 244);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(117, 32);
             this.label7.TabIndex = 14;
@@ -184,7 +166,7 @@
             // txtpages
             // 
             this.txtpages.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtpages.Location = new System.Drawing.Point(293, 297);
+            this.txtpages.Location = new System.Drawing.Point(293, 247);
             this.txtpages.Name = "txtpages";
             this.txtpages.Size = new System.Drawing.Size(242, 30);
             this.txtpages.TabIndex = 15;
@@ -193,7 +175,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(25, 341);
+            this.label8.Location = new System.Drawing.Point(25, 291);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(182, 32);
             this.label8.TabIndex = 16;
@@ -202,16 +184,36 @@
             // txtpublisher
             // 
             this.txtpublisher.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtpublisher.Location = new System.Drawing.Point(293, 344);
+            this.txtpublisher.Location = new System.Drawing.Point(293, 294);
             this.txtpublisher.Name = "txtpublisher";
             this.txtpublisher.Size = new System.Drawing.Size(242, 30);
             this.txtpublisher.TabIndex = 17;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(25, 337);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(131, 32);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "STATUS";
+            // 
+            // txtstatus
+            // 
+            this.txtstatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtstatus.Location = new System.Drawing.Point(293, 340);
+            this.txtstatus.Name = "txtstatus";
+            this.txtstatus.Size = new System.Drawing.Size(242, 30);
+            this.txtstatus.TabIndex = 19;
             // 
             // add_books
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 397);
+            this.ClientSize = new System.Drawing.Size(800, 446);
+            this.Controls.Add(this.txtstatus);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.txtpublisher);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtpages);
@@ -219,12 +221,10 @@
             this.Controls.Add(this.txtlanguage);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cbGenre);
-            this.Controls.Add(this.txtCopies);
             this.Controls.Add(this.txtYear);
             this.Controls.Add(this.txtAuthor);
             this.Controls.Add(this.txtTitle);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -242,12 +242,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.TextBox txtAuthor;
         private System.Windows.Forms.TextBox txtYear;
-        private System.Windows.Forms.TextBox txtCopies;
         private System.Windows.Forms.ComboBox cbGenre;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtlanguage;
@@ -255,5 +253,7 @@
         private System.Windows.Forms.TextBox txtpages;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtpublisher;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtstatus;
     }
 }

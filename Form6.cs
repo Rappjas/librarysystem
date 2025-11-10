@@ -16,7 +16,7 @@ namespace librarysystem
 {
     public partial class Form6 : Form
     {
-        private int borrowerId;
+        //private int borrowerId;
         public Form6()
         {
             InitializeComponent();
@@ -130,15 +130,16 @@ namespace librarysystem
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (borrowerId == 0)
+            /*if (borrowerId == 0)
             {
                 MessageBox.Show("You have not borrowed any books yet.");
                 return;
             }
 
-            Form9 bview = new Form9(borrowerId);
+            Form9 bview = new Form9();
             bview.Show();
             this.Hide();
+            */
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -150,9 +151,9 @@ namespace librarysystem
             }
 
             DataGridViewRow row = dataGridView1.SelectedRows[0];
-            string bookId = row.Cells["BookID"].Value.ToString();
-            string title = row.Cells["BookTitle"].Value.ToString();
-            string author = row.Cells["Author"].Value.ToString();
+            book_data.currentbookid = row.Cells["BookID"].Value.ToString();
+            book_data.currentbookname = row.Cells["BookTitle"].Value.ToString();
+            book_data.currentbookauthor= row.Cells["Author"].Value.ToString();
             string status = row.Cells["Status"].Value.ToString();
 
             if (status.ToLower() != "available")
@@ -161,13 +162,13 @@ namespace librarysystem
                 return;
             }
 
-            Form7 brform = new Form7(bookId, title, author); // Adjust Form7 to accept string BookID
+            Form7 brform = new Form7(); // Adjust Form7 to accept string BookID
             brform.Show();
             this.Hide();
 
-            if (brform.BorrowerId > 0) {
-                borrowerId = brform.BorrowerId;
-            }
+            //if (brform.BorrowerId > 0) {
+             //   borrowerId = brform.BorrowerId;
+            //}
                 
 
             LoadBook();
@@ -219,9 +220,9 @@ namespace librarysystem
             string bookId = row.Cells["BookID"].Value.ToString();
             string title = row.Cells["BookTitle"].Value.ToString();
             string author = row.Cells["Author"].Value.ToString();
-            int borrowerId = this.borrowerId;
+            //int borrowerId = this.borrowerId;
 
-            Form12 form12 = new Form12(bookId, borrowerId, title, author); // Adjust Form12 for string BookID
+            Form12 form12 = new Form12(); // Adjust Form12 for string BookID
             form12.Show();
             this.Hide();
 

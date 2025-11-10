@@ -35,13 +35,14 @@ namespace librarysystem
             int page = int.Parse(txtpages.Text);
             string publishers = txtpublisher.Text;
             string language = txtlanguage.Text;
+            string status = txtstatus.Text;
 
 
             using (MySqlConnection conn = new MySqlConnection(connector.connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand($"INSERT INTO books (BookID, BookTitle, Author, Genre, Pub_Date, pagecount, publisher, language, ISBN, Shelf_Number) " +
-                               $"VALUES (@id, @title, @author, @genre, @pubYear, @pages, @publisher, @lang, @isbn, @shelf)", conn);
+                MySqlCommand cmd = new MySqlCommand($"INSERT INTO books (BookID, BookTitle, Author, Genre, Pub_Date, pagecount, publisher, language, ISBN, Shelf_Number, status) " +
+                               $"VALUES (@id, @title, @author, @genre, @pubYear, @pages, @publisher, @lang, @isbn, @shelf, @status)", conn);
                 cmd.Parameters.AddWithValue("id", bookid);
                 cmd.Parameters.AddWithValue("@title", title);
                 cmd.Parameters.AddWithValue("@author", author);
@@ -52,6 +53,7 @@ namespace librarysystem
                 cmd.Parameters.AddWithValue("@lang", language);
                 cmd.Parameters.AddWithValue("@isbn", isbn);
                 cmd.Parameters.AddWithValue("@shelf", shelf);
+                cmd.Parameters.AddWithValue("@status", status);
                 cmd.ExecuteNonQuery();
 
                 MessageBox.Show("Book added successfully!");

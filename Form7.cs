@@ -20,16 +20,14 @@ namespace librarysystem
         private string bookAuthor;
 
         public int BorrowerId { get; private set; }
-        public Form7(string Id, string title, string author)
+        public Form7()
         {
             InitializeComponent();
-            bookId = Id;
-            bookTitle = title;
-            bookAuthor = author;
+            
 
-            txtBookId.Text = Id.ToString();
-            txtTitle.Text = title;
-            txtAuthor.Text = author;
+            txtBookId.Text = book_data.currentbookid;
+            txtTitle.Text = book_data.currentbookname;
+            txtAuthor.Text = book_data.currentbookauthor;
 
             txtBorrowed.Text = DateTime.Now.ToString("MM/dd/yyyy");
 
@@ -59,16 +57,14 @@ namespace librarysystem
                 MySqlCommand insertStatus = new MySqlCommand(
                     $"INSERT INTO status (book_id, journal_id, user_id, status, borrowed_date, return_date, reserved_date) " +
                     $"VALUES (@bookId, NULL, @userId, 'BORROWED', @borrowedDate, @returnDate, NULL)", conn);
-                insertStatus.Parameters.AddWithValue("@bookId", bookId);
+                insertStatus.Parameters.AddWithValue("@bookId", book_data.currentbookid);
                 insertStatus.Parameters.AddWithValue("@userId", user_data.user_id);
                 insertStatus.Parameters.AddWithValue("@borrowedDate", borrowedDate);
                 insertStatus.Parameters.AddWithValue("@returnDate", returnDate);
                 insertStatus.ExecuteNonQuery();
-                int borrowerId = (int)insertStatus.LastInsertedId;
-                BorrowerId = borrowerId;
 
                 MySqlCommand updateBookStatus = new MySqlCommand($"UPDATE books SET Status = 'BORROWED' WHERE BookID = @bookId", conn);
-                updateBookStatus.Parameters.AddWithValue("@bookId", bookId);
+                updateBookStatus.Parameters.AddWithValue("@bookId", book_data.currentbookid);
                 updateBookStatus.ExecuteNonQuery();
 
                 MessageBox.Show("Book borrowed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -95,7 +91,7 @@ namespace librarysystem
                 // Check if the book is available
                 MySqlCommand cmd = new MySqlCommand(
                     "SELECT Status FROM books WHERE BookID = @bookId", conn);
-                cmd.Parameters.AddWithValue("@bookId", bookId);
+                cmd.Parameters.AddWithValue("@bookId", book_data.currentbookid);
 
                 string status = cmd.ExecuteScalar()?.ToString();
 

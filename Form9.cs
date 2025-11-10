@@ -14,7 +14,7 @@ namespace librarysystem
     public partial class Form9 : Form
     {
         private int borrowerId;
-        public Form9(int borrowerId)
+        public Form9()
         {
             InitializeComponent();
             this.borrowerId = borrowerId;

@@ -16,7 +16,7 @@ namespace librarysystem
         private string bookId;
         private int borrowerId;
         private string title, author;
-        public Form12(string bookId, int borrowerId, string title, string author)
+        public Form12()
         {
             InitializeComponent();
             this.bookId = bookId;
